@@ -1,8 +1,5 @@
 #!bin/bash
-
 NUMBER = $1
-
-
 if [$NUMBER -eq 4]
 then
     echo "The number is 4"
