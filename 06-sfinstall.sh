@@ -9,7 +9,7 @@ then
 fi
 
 
-dnf install mysql -y
+dnf install mysqlgggg -y
 
 if [ $? -ne 0 ]
 then
