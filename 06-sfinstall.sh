@@ -19,7 +19,7 @@ then
     echo -e "$R ERROR: This script must be run as root. $E" | tee -a $LOG_FILE
     exit 1
 else
-    echo -e "$G Running as root user. $E"  &>> $LOG_FILE
+    echo -e "$G Running as root user. $E" | tee -a $LOG_FILE
     
 fi
 
