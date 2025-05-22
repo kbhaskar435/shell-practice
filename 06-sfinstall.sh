@@ -5,6 +5,8 @@ if [ $USERID -ne 0 ]
 then
     echo "ERROR: This script must be run as root."
     exit 1
+else
+    echo "Script is running as root."
     
 fi
 
