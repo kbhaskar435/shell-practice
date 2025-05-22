@@ -4,7 +4,7 @@ echo "All Variables passed to the script::$@"
 echo "number of arguments passed to the script:: $#"
 echo "Script name:: $0"
 echo "PID of the script:: $$"
-sleep 10 &
+sleep 10
 echo "PID of the last background process:: $!"
 echo "Exit status of the last command:: $?"
 echo "Home directory of the current user:: $HOME"
