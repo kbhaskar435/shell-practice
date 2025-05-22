@@ -7,30 +7,37 @@ G="\e[32m"
 Y="\e[33m"
 E="\e[0m"
 
+LOGS_FOLDER='/var/log/shellscript-logs'
+SCRIPT_NAME=$(echo $0 | cut -d '.' -f 1)
+LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+
+mkdir -p $LOGS_FOLDER
+echo "Script started at $(date)" &>> $LOG_FILE
+
 if [ $USERID -ne 0 ] 
 then
-    echo -e "$R ERROR: This script must be run as root. $E"
+    echo -e "$R ERROR: This script must be run as root. $E" &>> $LOG_FILE
     exit 1
 else
-    echo -e "$G Running as root user. $E"
+    echo -e "$G Running as root user. $E"  &>> $LOG_FILE
     
 fi
 
 dnf list installed mysql
 if [ $? -ne 0 ]
 then
-    echo -e "$Y MySQL is not installed. Proceeding with installation. $E"
+    echo -e "$Y MySQL is not installed. Proceeding with installation. $E" &>> $LOG_FILE
     dnf install mysql -y
     if [ $? -eq 0 ]
     then
-        echo -e "$G MySQL installation completed successfully. $E"
+        echo -e "$G MySQL installation completed successfully. $E" &>> $LOG_FILE
     else
-        echo -e "$R MySQL installation failed. $E"
+        echo -e "$R MySQL installation failed. $E" &>> $LOG_FILE
         exit 1
     fi
     
 else
-    echo -e "$Y MySQL is already installed. Proceeding with configuration. $E"
+    echo -e "$Y MySQL is already installed. Proceeding with configuration. $E" &>> $LOG_FILE
 
 fi
 
