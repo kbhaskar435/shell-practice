@@ -6,17 +6,26 @@ then
     echo "ERROR: This script must be run as root."
     exit 1
 else
-    echo "Script is running as root."
+    echo "Running as root user."
     
 fi
 
-
-dnf install mysqlgggg -y
-
-if [ $? -ne 0 ]
+dnf list installed mysql
+if [ $? -eq 0 ]
 then
-    echo "ERROR: Failed to install MySQL."
-    exit 1
+    echo "MySQL is already installed."
+    exit 0
 else
-    echo "MySQL installed successfully."
+    echo "MySQL is not installed. Proceeding with installation."
+fi
+
+
+dnf install mysql -y
+
+if [ $? -eq 0 ]
+then
+    echo "MySQL installation completed successfully."
+else
+    echo "MySQL installation failed."
+    exit 1
 fi
