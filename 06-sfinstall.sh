@@ -16,28 +16,28 @@ echo "Script started at $(date)" &>> $LOG_FILE
 
 if [ $USERID -ne 0 ] 
 then
-    echo -e "$R ERROR: This script must be run as root. $E" &>> $LOG_FILE
+    echo -e "$R ERROR: This script must be run as root. $E" | tee -a $LOG_FILE
     exit 1
 else
     echo -e "$G Running as root user. $E"  &>> $LOG_FILE
     
 fi
 
-dnf list installed mysql
+dnf list installed mysql &>> $LOG_FILE
 if [ $? -ne 0 ]
 then
-    echo -e "$Y MySQL is not installed. Proceeding with installation. $E" &>> $LOG_FILE
+    echo -e "$Y MySQL is not installed. Proceeding with installation. $E" | tee -a $LOG_FILE
     dnf install mysql -y
     if [ $? -eq 0 ]
     then
-        echo -e "$G MySQL installation completed successfully. $E" &>> $LOG_FILE
+        echo -e "$G MySQL installation completed successfully. $E" | tee -a $LOG_FILE
     else
-        echo -e "$R MySQL installation failed. $E" &>> $LOG_FILE
+        echo -e "$R MySQL installation failed. $E" | tee -a $LOG_FILE
         exit 1
     fi
     
 else
-    echo -e "$Y MySQL is already installed. Proceeding with configuration. $E" &>> $LOG_FILE
+    echo -e "$Y MySQL is already installed. Proceeding with configuration. $E" | tee -a $LOG_FILE
 
 fi
 
