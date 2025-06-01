@@ -10,6 +10,7 @@ E="\e[0m"
 LOGS_FOLDER='/var/log/shellscript-logs'
 SCRIPT_NAME=$(echo $0 | cut -d '.' -f 1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+PACKAGES=("mysql","python3","nginx")
 
 mkdir -p $LOGS_FOLDER
 echo "Script started at $(date)" &>> $LOG_FILE
@@ -23,23 +24,41 @@ else
     
 fi
 
-dnf list installed mysql &>> $LOG_FILE
-if [ $? -ne 0 ]
-then
-    echo -e "$Y MySQL is not installed. Proceeding with installation. $E" | tee -a $LOG_FILE
-    dnf install mysql -y
-    if [ $? -eq 0 ]
+VALIDATE(){
+    if [ $1 eq 0 ]
     then
-        echo -e "$G MySQL installation completed successfully. $E" | tee -a $LOG_FILE
+        echo -e "$G $2 installed successfully. $E" | tee -a $LOG_FILE
     else
-        echo -e "$R MySQL installation failed. $E" | tee -a $LOG_FILE
+        echo -e "$R $2 installation failed. $E" | tee -a $LOG_FILE
         exit 1
     fi
-    
-else
-    echo -e "$Y MySQL is already installed. Proceeding with configuration. $E" | tee -a $LOG_FILE
+}
 
-fi
+INSTALL(){
+    echo -e "$Y Installing $1... $E" | tee -a $LOG_FILE
+    dnf install $1 -y &>> $LOG_FILE
+    VALIDATE $? $1
+}
+
+for i in ${PACKAGES[@]}
+do
+    dnf list installed $i &>> $LOG_FILE
+    if [ $? -eq 0 ]
+    then
+        echo -e "$G $i is already installed. $E" | tee -a $LOG_FILE
+    else
+        echo -e "$Y $i is not installed. Proceeding with installation. $E" | tee -a $LOG_FILE
+        INSTALL $i
+    fi
+
+done
+
+
+
+
+
+
+
 
 
 # dnf install mysql -y
