@@ -3,9 +3,12 @@
   connection: local
   vars:
     COURSE_NAME: "Ansible for Beginners"
-    DURATION: "2 hours"
+
   tasks:
     - name: print hello world
+      vars:
+        COURSE_NAME: "Ansible Beginners"
+        DURATION: "2 hours"
       ansible.builtin.debug:
         msg: "Hello World from {{ COURSE_NAME }} for {{ DURATION }}"
     - name: print task2
