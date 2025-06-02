@@ -5,6 +5,11 @@
     COURSE_NAME: "Ansible for Beginners"
   vars_files:
     - vars.yaml
+  vars_prompt:
+    - name: COURSE
+      prompt: "Enter the course name"
+      default: "{{ COURSE_NAME }}"
+      private: false
   tasks:
     - name: print hello world
       vars:
