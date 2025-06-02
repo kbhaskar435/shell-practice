@@ -1,5 +1,15 @@
-- name: ping the server
+- name: nginix install and run
   hosts: frontend
+  become: true
   tasks:
-    - name: Ping the server
-      ansible.builtin.ping:
+    - name: install nginix
+      package:
+        # Use 'package' module to ensure compatibility with different package
+        name: nginx
+        state: present
+
+    - name: start nginix service
+      service:
+        name: nginx
+        state: started
+        enabled: true
