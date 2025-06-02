@@ -1,9 +1,13 @@
 - name: print locally
   hosts: localhost
+  connection: local
+  vars:
+    COURSE_NAME: "Ansible for Beginners"
+    DURATION: "2 hours"
   tasks:
     - name: print hello world
       ansible.builtin.debug:
-        msg: "Hello World"
+        msg: "Hello World from {{ COURSE_NAME }} for {{ DURATION }}"
     - name: print task2
       ansible.builtin.debug:
         msg: "This is task 2"
